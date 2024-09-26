@@ -1,0 +1,14 @@
+# tested with python=3.8
+numpy==1.23
+ipykernel
+torch==1.10.0+cu111
+torchvision==0.11.0+cu111
+torchaudio==0.10.0 
+mmcv-full==1.4.8
+timm
+mmdet==2.22.0
+
+-f https://download.pytorch.org/whl/torch_stable.html
+-f https://download.openmmlab.com/mmcv/dist/cu111/torch1.10/index.html
+
+# pip install -e . at the end of the installation to install mmpose
