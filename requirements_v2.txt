@@ -7,6 +7,7 @@ torchaudio==0.10.0
 mmcv-full==1.4.8
 timm
 mmdet==2.22.0
+yapf==0.40.1
 
 -f https://download.pytorch.org/whl/torch_stable.html
 -f https://download.openmmlab.com/mmcv/dist/cu111/torch1.10/index.html
