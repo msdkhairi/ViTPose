@@ -18,9 +18,6 @@ class LSTEmbed(nn.Module):
 
     def __init__(
         self,
-        kernel_size: Union[Tuple[int, int], int] = 1,
-        stride: Union[Tuple[int, int], int] = 1,
-        padding: Union[Tuple[int, int], int] = 0,
         in_chans: int = 256,
         out_chans: int = 256,
         flatten: bool = False,
@@ -35,15 +32,12 @@ class LSTEmbed(nn.Module):
         """
         super().__init__()
 
-        self.proj = nn.Conv2d(
-            in_chans, out_chans, kernel_size=kernel_size, stride=stride, padding=padding
-        )
+        self.proj = nn.Linear(in_chans, out_chans)
         self.flatten = flatten
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        x = self.proj(x)
-        # B C H W -> B H W C
         x = x.permute(0, 2, 3, 1).contiguous()
+        x = self.proj(x)
         if self.flatten:
             x = x.flatten(1, 2)
         return x
@@ -65,10 +59,7 @@ class SAM2PESimpleLST(nn.Module):
         super().__init__()
 
         # self.embed = nn.Conv2d(feature_dim, decoder_embed_dim, kernel_size=1, stride=1, padding=0)
-        self.embed = LSTEmbed(kernel_size=1, 
-                              stride=1, 
-                              padding=0, 
-                              in_chans=feature_dim, 
+        self.embed = LSTEmbed(in_chans=feature_dim, 
                               out_chans=decoder_embed_dim,
                               flatten=False)
 
